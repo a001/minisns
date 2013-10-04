@@ -1,8 +1,10 @@
 package com.trouble.lrv.core.validator;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+@Component
 public class FileCheckValidator implements Validator {
 
 	@Override
