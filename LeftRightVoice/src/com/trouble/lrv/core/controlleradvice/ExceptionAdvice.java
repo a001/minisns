@@ -1,9 +1,5 @@
 package com.trouble.lrv.core.controlleradvice;
 
-import org.apache.catalina.connector.ClientAbortException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author Choi Bin
