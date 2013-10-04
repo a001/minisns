@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trouble.lrv.dao.sns.PostMapper">
+	
+	<resultMap type="Posting" id="postResultMap">
+		<id property="postId" column="postid"/>
+		<result property="post" column="post"/>
+		<result property="ownerId" column="ownerid"/>
+		<result property="insertTime" column="insertDt"/>
+		<result property="userPhoto" column="userphoto"/>	
+		<collection property="commentList" ofType="Comment">
+			<id property="comId" column="comid"/>
+			<result property="comText" column="comtext"/>
+			<result property="ownerId" column="comOwnerid"/>
+		</collection>
+		<collection property="postLikeList" ofType="PostLike" column="postId" select="getPostLike">
+			<id property="likeId" column="likeid" />
+			<result property="postId" column="postId"/>
+			<result property="ownerId" column="ownerId"/>
+		</collection>
+	</resultMap>
+	
+	<select id="getPost" parameterType="String" resultMap="postResultMap">
+		select p.postid, p.post, p.ownerid, p.insertDt,
+			   c.comid, c.comtext, c.ownerid as comOwnerid, u.userphoto
+		from post p
+			left outer join postcomment c on p.postid = c.postid
+			left outer join users u on p.ownerid = u.username
+		where p.ownerid in ( select friendusername from friendlist where username=#{param1} )
+		order by p.insertDt desc
+	</select>
+	
+	<select id="getPostLike" parameterType="int" resultType="PostLike">
+		select likeid, postid, ownerid from postlike
+			where postid = #{postId}
+	</select>
+	
+	<insert id="addPost" parameterType="Posting">
+		insert into post(post, ownerid, insertDt) values(#{post}, #{ownerId}, #{insertTime})
+		<selectKey resultType="int" keyProperty="postId">
+             SELECT LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+	
+</mapper>

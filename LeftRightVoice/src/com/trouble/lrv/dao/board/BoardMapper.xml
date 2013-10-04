@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trouble.lrv.dao.board.BoardMapper">
+	
+	<select id="getList" resultType="Board">
+		select wno, subject, ownerId from board
+	</select>
+	
+	<insert id="write" parameterType="Board">
+		insert into board(subject, content, ownerid) 
+			values(#{subject}, #{content}, #{ownerId})
+	</insert>
+	
+	<select id="read" parameterType="int" resultType="Board">
+		select wno, subject, content, ownerId from board
+			where wno = #{wno}
+	</select>
+	
+	<select id="autoText" parameterType="String" resultType="AutoCompletionText">
+		select autotext from autocomtext
+			where autotext like concat(#{searchText},'%')
+	</select>
+	
+	<insert id="post" parameterType="Posting">
+		insert into post(post, ownerid) values(#{post}, #{ownerId})
+	</insert>
+	
+	<select id="getNewPost" resultType="Posting">
+		select post, ownerid, appendflag from post where appendflag = '0'
+	</select>
+	
+	<select id="getPost" resultType="Posting">
+		select post, ownerid, appendflag from post 
+			where appendflag = '1' and ownerid in ( select friendusername from friendlist where username=#{param1} )
+	</select>
+	
+	<update id="updatePostAppend" parameterType="Posting">
+		update post set appendflag = #{appendFlag}
+	</update>
+	
+	<select id="friendCnt" parameterType="String" resultType="int">
+		select count(friendusername) as friendcnt from friendlist where username=#{param1};
+	</select>
+	
+
+</mapper>

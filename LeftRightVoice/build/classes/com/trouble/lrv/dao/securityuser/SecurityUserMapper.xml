@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trouble.lrv.dao.securityuser.SecurityUserMapper">
+	
+	<select id="userExists" parameterType="String" resultType="String">
+		select username from users where username = #{username}
+	</select>
+	
+	<insert id="createUser" parameterType="SecurityUser">
+		insert into users (username, password, email, politicscolor, enabled, userphoto) 
+		values (#{username}, #{password}, #{email}, #{politicsColor}, #{enabled}, #{userPhoto})
+	</insert>
+	
+	<insert id="insertUserAuthorities" parameterType="String">
+		insert into authorities (username, authority) 
+		values (#{param1},#{param2})
+	</insert>
+	
+	<select id="loadUserByUsername" parameterType="String" resultType="SecurityUser">
+		select username, password, email, point, userlevel, userdesc, enabled, politicscolor, userphoto from users where username = #{username}
+	</select>
+	
+	<select id="userList" parameterType="String" resultType="String">
+		select username from users where username not in (#{param1})
+	</select>
+	
+	<insert id="addFriend">
+		insert into friendlist(username, friendusername) 
+			values (#{param1}, #{param2})
+	</insert>
+	
+	<select id="findFriend" parameterType="String" resultType="String">
+		select friendusername from friendlist
+			where username = #{param1} and friendusername= #{param2}
+	</select>
+	
+	<select id="getFriend" parameterType="String" resultType="String">
+		select friendusername from friendlist
+			where username = #{param1}
+	</select>
+	
+	<delete id="delFriend" parameterType="String">
+		delete from friendlist
+			where username=#{param1}
+	</delete>
+	
+	<insert id="createBasicFriend">
+		insert into friendlist(username, friendusername) 
+			values (#{param1}, #{param1})
+	</insert>
+
+</mapper>

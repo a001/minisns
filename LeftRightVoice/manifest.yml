@@ -1,0 +1,14 @@
+---
+applications:
+- name: lrvsns
+  framework: standalone
+  runtime: java7
+  memory: 512M
+  instances: 1
+  url: lrvsns.${target-base}
+  path: .
+  services:
+    mysql-6ac93:
+      vendor: mysql
+      version: '5.1'
+      tier: free

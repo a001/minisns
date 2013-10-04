@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trouble.lrv.dao.sns.LikeItMapper">
+		
+	<select id="getPost" parameterType="String" resultType="PostLike">
+		select likeid, postid, ownerid from postlike
+			where postid = #{postId}
+	</select>
+	
+	<insert id="addPost" parameterType="PostLike">
+		insert into postlike(postid, ownerid) values(#{postId}, #{ownerId})
+		<selectKey resultType="int" keyProperty="likeId">
+             SELECT LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+	
+	<insert id="removePost" parameterType="PostLike">
+		delete from postlike where postid=#{postId} and ownerid=#{ownerId}
+	</insert>
+
+	<select id="followerCount" resultType="int">
+		select count(*) as followercount from friendlist where friendusername = #{param1}
+	</select>
+	
+	<select id="followingCount" resultType="int">
+		select count(*) as followingcount from friendlist where username = #{param1}
+	</select>
+	
+</mapper>
