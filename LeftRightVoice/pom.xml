@@ -103,6 +103,13 @@
 		    <groupId>org.codehaus.castor</groupId>
 		    <artifactId>com.springsource.org.castor</artifactId>
 		    <version>1.2.0</version>
+		    <exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				 </exclusion>
+			</exclusions>
 		</dependency>
 		<!-- MyBatis -->
 		<dependency>
