@@ -104,12 +104,13 @@
 		    <artifactId>com.springsource.org.castor</artifactId>
 		    <version>1.2.0</version>
 		    <exclusions>
-				<!-- Exclude Commons Logging in favor of SLF4j -->
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				 </exclusion>
-			</exclusions>
+		    	<exclusion>
+		    		<artifactId>
+		    			com.springsource.org.apache.commons.logging
+		    		</artifactId>
+		    		<groupId>org.apache.commons</groupId>
+		    	</exclusion>
+		    </exclusions>
 		</dependency>
 		<!-- MyBatis -->
 		<dependency>
@@ -248,6 +249,14 @@
 			<groupId>com.mysql.jdbc</groupId>
 			<artifactId>com.springsource.com.mysql.jdbc</artifactId>
 			<version>5.1.6</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>
+						com.springsource.org.apache.commons.logging
+					</artifactId>
+					<groupId>org.apache.commons</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- CloudFoundry -->
 		
